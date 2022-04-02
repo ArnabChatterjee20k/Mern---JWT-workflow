@@ -1,7 +1,9 @@
 import '../App.css';
 import { useState,useRef } from "react";
+import { useHistory } from 'react-router-dom';
 
 function Login() {
+    const history = useHistory()
     const [email, setemail] = useState(null);
     const [password, setpassword] = useState(null);
     const response_area = useRef(null);
@@ -21,10 +23,11 @@ function Login() {
             console.log(e);
         })
         const data = await response.json();
-        console.log(data);
-        response_area.current.innerHTML = data.status;
-        response_area.current.style.fontWeight = "bold";
-        
+        if(data.token){
+            localStorage.setItem('auth_token',data.token);
+            history.replace("/dashboard");
+        }
+        console.log(data);        
     }
 
     return (

@@ -1,7 +1,11 @@
 import '../App.css';
 import { useState,useRef } from "react";
+import { useHistory } from 'react-router-dom';
 
 function Register() {
+
+  const history = useHistory();
+
   const [name, setname] = useState(null);
   const [email, setemail] = useState(null);
   const [password, setpassword] = useState(null);
@@ -27,8 +31,11 @@ function Register() {
     })
     const data = await response.json();
     console.log(data);
-
-    response_area.current.innerHTML = data.status
+    if(data.status === "ok"){
+      localStorage.setItem('auth_token',data.token);
+      history.push("/dashboard");
+    }
+    response_area.current.innerHTML = data.status;
     response_area.current.style.fontWeight = "bold";
         
   }
