@@ -65,10 +65,10 @@ export default function Dashboard() {
     return (
         <>
             <h1>Your Quote</h1>
-            <p>{quote || "No quote found"}</p>
+            <p data-testid="updated_quote">{quote || "No quote found"}</p>
             <div>
-                <input type="text" placeholder="Enter to update the quote" onChange={(e) => setquote(e.target.value)} />
-                <button type="button" onClick={updateQuote}>Update Quote</button>
+                <input type="text" placeholder="Enter to update the quote" onChange={(e) => setquote(e.target.value)} data-testid="update_quote_field"/>
+                <button type="button" onClick={updateQuote} data-testid="update_quote_button">Update Quote</button>
             </div>
         </>
     )

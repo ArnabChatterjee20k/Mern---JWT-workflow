@@ -33,11 +33,11 @@ function Login() {
     return (
         <div>
             <form onSubmit={register_user}>
-                <input type="text" placeholder="email" onChange={(e) => setemail(e.target.value)} />
+                <input type="text" placeholder="email" onChange={(e) => setemail(e.target.value)} data-testid="email" />
                 <br />
-                <input type="text" placeholder="password" onChange={(e) => setpassword(e.target.value)} />
+                <input type="text" placeholder="password" onChange={(e) => setpassword(e.target.value)} data-testid="password" />
                 <br />
-                <button type="submit">submit</button>
+                <button type="submit" data-testid="submit">submit</button>
             </form>
             <h1>Response</h1>
             <hr />
