@@ -15,10 +15,30 @@ export default function Dashboard() {
 
         if (res.status === "ok") {
             setquote(res.quote)
-            console.log(quote)
+            // console.log(quote) it will give null as quote is not set yet as setquote take some time to set the value of quote 
         }
-        else{
-            setquote("No quote found")
+        return res;
+    }
+
+
+    async function updateQuote(){
+        const data = await fetch('http://localhost:1337/api/quote', {
+            method: 'PUT',
+            headers: {
+                "x-access-token": localStorage.getItem('auth_token'),
+                // needed paramters otherwise undefined will be sent to server
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                quote: quote
+            })
+        })
+        const res = await data.json();
+        if (res.status === "ok") {
+            setquote(res.quote)
+            alert("Updated!")
+            // console.log(quote) it will give null as quote is not set yet as setquote take some time to set the value of quote 
         }
         return res;
     }
@@ -37,11 +57,19 @@ export default function Dashboard() {
                 populateQuote();
             }
         }
+        else{
+            alert("Some thing went wrong and jwt token is not found")
+            history.replace("/login")
+        }
     }, []);
     return (
         <>
             <h1>Your Quote</h1>
-            <p>{quote}</p>
+            <p>{quote || "No quote found"}</p>
+            <div>
+                <input type="text" placeholder="Enter to update the quote" onChange={(e) => setquote(e.target.value)} />
+                <button type="button" onClick={updateQuote}>Update Quote</button>
+            </div>
         </>
     )
 }

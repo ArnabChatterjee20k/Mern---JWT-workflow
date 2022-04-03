@@ -83,6 +83,21 @@ app.get("/api/quote",async (req,res)=>{
     }
 })
 
+app.put("/api/quote",async (req,res)=>{
+    const token = req.headers["x-access-token"]
+
+    try{
+        const decoded = jwt.verify(token,jwtSecretKey);
+        const email = decoded.email;
+        await User.updateOne({email:email},{quote:req.body.quote});
+        console.log(req.body.quote);
+        return res.json({status:"ok",quote:req.body.quote});
+    }catch(e){
+        console.log(e)
+        res.status(400).send({status:"Invalid token"});
+    }
+}
+)
 // Start server
 app.listen(1337,()=>{
     console.log("server started at port 1337");
