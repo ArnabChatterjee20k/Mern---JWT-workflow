@@ -34,11 +34,15 @@ app.post("/api/register", async (req, res) => {
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             const user = new User({...req.body, password: hashedPassword});
             console.log(user);
+            const token = jwt.sign({ 
+                email: user.email,
+                name: user.name,
+            }, jwtSecretKey);
             await user.save((err, data) => {
                 if (err) {
                     res.status(400).send({ status: err.message });
                 } else {
-                    res.status(201).send({ status: "ok" , user:user });
+                    res.status(201).send({ status: "ok" , user:user ,token:token });
                 }
             });
         } catch (e) {

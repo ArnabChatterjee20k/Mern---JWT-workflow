@@ -35,23 +35,25 @@ function Register() {
       localStorage.setItem('auth_token',data.token);
       history.push("/dashboard");
     }
-    response_area.current.innerHTML = data.status;
-    response_area.current.style.fontWeight = "bold";
+    else{
+      response_area.current.innerHTML = data.status;
+      response_area.current.style.fontWeight = "bold";
+    }
         
   }
 
   return (
     <div>
       <form onSubmit={register_user}>
-        <input type="text" placeholder="name" onChange={(e) => setname(e.target.value)} />
+        <input type="text" placeholder="name" onChange={(e) => setname(e.target.value)} data-testid="name"/>
         <br />
-        <input type="text" placeholder="email" onChange={(e) => setemail(e.target.value)} />
+        <input type="text" placeholder="email" onChange={(e) => setemail(e.target.value)} data-testid="email"/>
         <br />
-        <input type="text" placeholder="password" onChange={(e) => setpassword(e.target.value)} />
+        <input type="text" placeholder="password" onChange={(e) => setpassword(e.target.value)} data-testid="password"/>
         <br />
-        <input type="text" placeholder="quote" onChange={(e) => setquote(e.target.value)} />
+        <input type="text" placeholder="quote" onChange={(e) => setquote(e.target.value)} data-testid="quote"/>
         <br />
-        <button type="submit">submit</button>
+        <button type="submit" data-testid="submit">submit</button>
       </form>
       <h1>Response</h1>
       <hr />
